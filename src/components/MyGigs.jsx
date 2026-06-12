@@ -11,7 +11,7 @@ export default function MyGigs({ recruiter }) {
       const response = await axios.get('https://labour-link-hiq8.onrender.com/api/jobs');
       const filtered = response.data.filter(job => job.recruiterId === recruiter.id);
       setMyJobs(filtered);
-      loading(false);
+      setLoading(false); // ✅ Fixed typo here (was loading(false))
     } catch (error) {
       console.error("❌ Error fetching your jobs:", error);
       setLoading(false);
@@ -50,27 +50,27 @@ export default function MyGigs({ recruiter }) {
       
       {/* 🌟 BRANDED MIDNIGHT & AMBER MANAGEMENT CONSOLE HEADER */}
       <div className="bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 shadow-[0_4px_25px_rgba(15,23,42,0.05)]">
-        <h2 className="text-xl font-bold flex items-center gap-2">
+        <h2 className="text-xl font-semibold flex items-center gap-2">
           <span className="text-amber-400">💼</span> Recruiter Console
         </h2>
-        <p className="text-xs text-slate-400 mt-1">
-          Logged in as: <span className="font-bold underline text-slate-200">{recruiter.name}</span>
+        <p className="text-xs text-slate-400 mt-1 font-normal">
+          Logged in as: <span className="font-medium underline text-slate-200">{recruiter.name}</span>
         </p>
-        <div className="mt-3 bg-amber-400 text-slate-900 px-3 py-1.5 rounded-xl inline-block text-xs font-black shadow-sm">
+        <div className="mt-3 bg-amber-400 text-slate-900 px-3 py-1.5 rounded-xl inline-block text-xs font-bold shadow-sm">
           📊 Total Postings: {myJobs.length} active gigs
         </div>
       </div>
 
       {/* Loading State */}
       {loading && (
-        <div className="text-center py-12 text-slate-500 font-bold text-sm animate-pulse flex items-center justify-center gap-2">
+        <div className="text-center py-12 text-slate-500 font-medium text-sm animate-pulse flex items-center justify-center gap-2">
           <span>🔄</span> Loading your active listings...
         </div>
       )}
       
       {/* Empty State Layout */}
       {!loading && myJobs.length === 0 && (
-        <div className="bg-white rounded-2xl p-10 text-center text-slate-400 border border-dashed border-slate-300 font-bold text-sm shadow-sm">
+        <div className="bg-white rounded-2xl p-10 text-center text-slate-400 border border-dashed border-slate-300 font-medium text-sm shadow-sm">
           📥 You haven't published any active job cards yet. Click "Post a Job" to get started!
         </div>
       )}
@@ -85,32 +85,32 @@ export default function MyGigs({ recruiter }) {
             
             {/* Top Row: Category Pill & Price */}
             <div className="flex justify-between items-start gap-3">
-              <span className="inline-block bg-slate-100 text-slate-700 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-lg border border-slate-200/30">
+              <span className="inline-block bg-slate-100 text-slate-700 font-semibold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-lg border border-slate-200/30">
                 {job.jobType}
               </span>
-              <div className="bg-emerald-50 text-emerald-700 border border-emerald-100 font-black text-xl px-3.5 py-1 rounded-xl shadow-sm">
+              <div className="bg-emerald-50 text-emerald-700 border border-emerald-100 font-bold text-xl px-3.5 py-1 rounded-xl shadow-sm">
                 ₹{job.amount}
               </div>
             </div>
 
             {/* Middle Job Meta Specifications Box */}
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 bg-slate-50/80 rounded-xl p-3.5 text-xs text-slate-600 font-semibold border border-slate-100">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2.5 bg-slate-50/80 rounded-xl p-3.5 text-xs text-slate-500 font-normal border border-slate-100">
               <div className="flex items-center gap-2 col-span-2">
                 <span className="text-slate-400 text-sm">📍</span>
-                <span>Venue: <strong className="text-slate-800">{job.address}</strong></span>
+                <span>Venue: <strong className="font-semibold text-slate-700">{job.address}</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-slate-400 text-sm">📅</span>
-                <span>Date: <strong className="text-slate-800">{job.dateOfWork}</strong></span>
+                <span>Date: <strong className="font-semibold text-slate-700">{job.dateOfWork}</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-slate-400 text-sm">⏰</span>
-                <span>Reporting: <strong className="text-slate-800">{formatTime12Hour(job.timing)}</strong></span>
+                <span>Reporting: <strong className="font-semibold text-slate-700">{formatTime12Hour(job.timing)}</strong></span>
               </div>
               <div className="flex items-center gap-2 col-span-2 border-t border-slate-200/50 pt-2.5 mt-0.5">
                 <span className="text-slate-400 text-sm">💵</span>
                 <span>
-                  Payout: <strong className="text-slate-800">{job.paymentType}</strong> {job.paymentTimeline && `(${job.paymentTimeline})`}
+                  Payout: <strong className="font-semibold text-slate-700">{job.paymentType}</strong> {job.paymentTimeline && `(${job.paymentTimeline})`}
                 </span>
               </div>
               <div className="flex items-center gap-2 col-span-2 border-t border-slate-200/50 pt-2.5">
@@ -118,11 +118,11 @@ export default function MyGigs({ recruiter }) {
                 <span>
                   Travel Expenses: {' '}
                   {job.travelProvided === 'Yes' ? (
-                    <span className="text-[11px] bg-blue-50 text-blue-700 border border-blue-100 px-2 py-0.5 rounded-md font-bold">
+                    <span className="text-[11px] bg-blue-50 text-blue-700 border border-blue-100 px-2 py-0.5 rounded-md font-semibold">
                       ✅ Provided
                     </span>
                   ) : (
-                    <span className="text-[11px] text-slate-400 font-medium">
+                    <span className="text-[11px] text-slate-400 font-normal">
                       ❌ Not Provided
                     </span>
                   )}
@@ -133,9 +133,9 @@ export default function MyGigs({ recruiter }) {
             {/* Bottom Action Trigger */}
             <button
               onClick={() => handleDeleteJob(job._id)}
-              className="w-full bg-rose-50 hover:bg-rose-100 text-rose-600 font-black py-3 px-4 rounded-xl transition-all text-center text-xs tracking-wide border border-rose-100/60 shadow-sm"
+              className="w-full bg-rose-50 hover:bg-rose-100 text-rose-600 font-semibold py-3 px-4 rounded-xl transition-all text-center text-xs tracking-wide border border-rose-100/60 shadow-sm"
             >
-              🗑️ Mark Job as Filled (Remove Listing)
+              🗑️ Mark Job as Filled (Remove Listing) - Delete
             </button>
 
           </div>

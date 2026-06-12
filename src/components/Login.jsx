@@ -20,42 +20,55 @@ export default function Login({ setRecruiter, setView }) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow p-6 border border-gray-200">
-      <h2 className="text-xl font-bold text-gray-800 mb-1">🔑 Recruiter Login</h2>
-      <p className="text-xs text-gray-500 mb-5">Log in to manage and post daily wage jobs.</p>
+    <div className="bg-white rounded-2xl shadow-[0_4px_25px_rgba(15,23,42,0.02)] p-6 border border-slate-200/80 max-w-md mx-auto">
+      <h2 className="text-xl font-semibold text-slate-900 mb-1">🔑 Recruiter Login</h2>
+      <p className="text-xs text-slate-400 mb-5 font-normal">Log in to manage and post daily wage jobs.</p>
       
       <form onSubmit={handleLogin} className="space-y-4">
         <div>
-          <label className="block text-xs font-bold text-gray-700 mb-1">PHONE NUMBER *</label>
+          <label className="block text-[11px] font-semibold text-slate-900 tracking-wider mb-1.5 uppercase">
+            Phone Number *
+          </label>
           <input 
             type="tel" 
             value={phone} 
             onChange={(e) => setPhone(e.target.value)} 
             placeholder="e.g., 9876543210" 
-            className="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all placeholder-slate-400 font-medium" 
             required 
           />
         </div>
 
         <div>
-          <label className="block text-xs font-bold text-gray-700 mb-1">PASSWORD *</label>
+          <label className="block text-[11px] font-semibold text-slate-900 tracking-wider mb-1.5 uppercase">
+            Password *
+          </label>
           <input 
             type="password" 
             value={password} 
             onChange={(e) => setPassword(e.target.value)} 
             placeholder="••••••••" 
-            className="w-full border border-gray-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all placeholder-slate-400 font-medium" 
             required 
           />
         </div>
 
-        <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 px-4 rounded-lg transition text-center text-sm shadow-md">
-          Login
+        <button 
+          type="submit" 
+          className="w-full bg-slate-900 hover:bg-amber-400 text-white hover:text-slate-900 font-bold py-3 px-4 rounded-xl transition-all text-center text-xs tracking-wide shadow-md flex items-center justify-center gap-2"
+        >
+          Login to Dashboard
         </button>
       </form>
       
-      <p className="text-xs text-center text-gray-500 mt-4">
-        New here? <button onClick={() => setView('signup')} className="text-blue-600 font-bold hover:underline">Create an Account</button>
+      <p className="text-xs text-center text-slate-400 mt-5 font-normal">
+        New here? {' '}
+        <button 
+          onClick={() => setView('signup')} 
+          className="text-amber-500 font-semibold hover:underline"
+        >
+          Create an Account
+        </button>
       </p>
     </div>
   );

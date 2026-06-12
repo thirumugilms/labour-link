@@ -42,15 +42,15 @@ export default function PostJob({ recruiter, setView }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-[0_4px_25px_rgba(15,23,42,0.015)] space-y-6">
+    <div className="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-[0_4px_25px_rgba(15,23,42,0.015)] space-y-6 max-w-xl mx-auto">
       
       {/* Section Header */}
       <div>
-        <h2 className="text-xl font-black text-slate-950 tracking-tight flex items-center gap-2">
+        <h2 className="text-xl font-semibold text-slate-900 tracking-tight flex items-center gap-2">
           <span className="text-amber-500">📢</span> Post a New Job
         </h2>
-        <p className="text-xs text-slate-600 mt-1 font-bold">
-          Posting as: <span className="text-slate-950 font-black underline">{recruiter.name}</span>
+        <p className="text-xs text-slate-400 mt-1 font-normal">
+          Posting as: <span className="text-slate-700 font-medium underline">{recruiter.name}</span>
         </p>
       </div>
       
@@ -58,14 +58,13 @@ export default function PostJob({ recruiter, setView }) {
         
         {/* Job Category */}
         <div>
-          {/* ⚡ UPDATED: Changed text-slate-400 to text-slate-700 (much darker and sharper) */}
-          <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+          <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
             JOB CATEGORY / WORK TYPE *
           </label>
           <select 
             value={jobType} 
             onChange={(e) => setJobType(e.target.value)} 
-            className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-bold" 
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-medium" 
             required
           >
             <option value="🍽️ Food Serving / Catering">🍽️ Food Serving / Catering</option>
@@ -78,15 +77,15 @@ export default function PostJob({ recruiter, setView }) {
         </div>
 
         {/* WhatsApp Only Toggle Card */}
-        <div className="flex items-center bg-amber-50/50 p-4 rounded-xl border border-amber-200/70 shadow-sm">
+        <div className="flex items-center bg-amber-50/50 p-4 rounded-xl border border-amber-200/40 shadow-sm">
           <input 
             type="checkbox" 
             id="waToggle" 
             checked={whatsappOnly} 
             onChange={(e) => setWhatsappOnly(e.target.checked)} 
-            className="h-4 w-4 text-slate-900 focus:ring-amber-400 accent-amber-400 border-slate-400 rounded cursor-pointer" 
+            className="h-4 w-4 text-slate-900 focus:ring-amber-400/40 accent-amber-400 border-slate-300 rounded cursor-pointer" 
           />
-          <label htmlFor="waToggle" className="ml-3 text-xs font-black text-amber-950 cursor-pointer select-none">
+          <label htmlFor="waToggle" className="ml-3 text-xs font-medium text-amber-500 cursor-pointer select-none">
             💬 WhatsApp Only (Block direct phone calls)
           </label>
         </div>
@@ -94,28 +93,26 @@ export default function PostJob({ recruiter, setView }) {
         {/* Date and Clock Input Grid */}
         <div className="grid grid-cols-2 gap-4">
           <div>
-            {/* ⚡ UPDATED: High-contrast text label */}
-            <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+            <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
               DATE *
             </label>
             <input 
               type="date" 
               value={date} 
               onChange={(e) => setDate(e.target.value)} 
-              className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all font-bold" 
+              className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all font-medium" 
               required 
             />
           </div>
           <div>
-            {/* ⚡ UPDATED: High-contrast text label */}
-            <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+            <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
               REPORTING TIME *
             </label>
             <input 
               type="time" 
               value={time} 
               onChange={(e) => setTime(e.target.value)} 
-              className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all font-bold" 
+              className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all font-medium" 
               required 
             />
           </div>
@@ -123,33 +120,31 @@ export default function PostJob({ recruiter, setView }) {
 
         {/* Payment Amount */}
         <div>
-          {/* ⚡ UPDATED: High-contrast text label */}
-          <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+          <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
             PAYMENT AMOUNT *
           </label>
           <select 
             value={amount} 
             onChange={(e) => setAmount(e.target.value)} 
-            className="w-full bg-slate-50 border border-slate-300 text-emerald-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-black text-base" 
+            className="w-full bg-slate-50 border border-slate-200 text-emerald-700 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-semibold text-base" 
             required
           >
-            <option value="600" className="font-bold text-slate-900">₹600</option>
-            <option value="1000" className="font-bold text-slate-900">₹1000</option>
-            <option value="1500" className="font-bold text-slate-900">₹1500</option>
+            <option value="600" className="text-slate-900 font-medium">₹600</option>
+            <option value="1000" className="text-slate-900 font-medium">₹1000</option>
+            <option value="1500" className="text-slate-900 font-medium">₹1500</option>
           </select>
         </div>
 
         {/* Payment Method Group Box */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            {/* ⚡ UPDATED: High-contrast text label */}
-            <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+            <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
               PAYMENT MODE *
             </label>
             <select 
               value={paymentType} 
               onChange={(e) => setPaymentType(e.target.value)} 
-              className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-bold" 
+              className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-medium" 
               required
             >
               <option value="Spot Cash">💵 Spot Cash</option>
@@ -160,14 +155,13 @@ export default function PostJob({ recruiter, setView }) {
           {/* Conditional Render Timeline */}
           {paymentType !== 'Spot Cash' && (
             <div>
-              {/* ⚡ UPDATED: High-contrast text label */}
-              <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+              <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
                 PAYMENT TIMELINE *
               </label>
               <select 
                 value={paymentTimeline} 
                 onChange={(e) => setPaymentTimeline(e.target.value)} 
-                className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-bold" 
+                className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-medium" 
                 required
               >
                 <option value="Same Day (After Work)">⚡ Same Day (After Work)</option>
@@ -180,8 +174,7 @@ export default function PostJob({ recruiter, setView }) {
 
         {/* Workplace Address */}
         <div>
-          {/* ⚡ UPDATED: High-contrast text label */}
-          <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+          <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
             WORK AREA ADDRESS *
           </label>
           <textarea 
@@ -189,15 +182,14 @@ export default function PostJob({ recruiter, setView }) {
             value={address} 
             onChange={(e) => setAddress(e.target.value)} 
             placeholder="Enter the specific area name (e.g., Anna Nagar, Near Metro Station)..." 
-            className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all placeholder-slate-400 font-bold" 
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all placeholder-slate-400 font-medium" 
             required
           />
         </div>
 
         {/* Google Maps Link Field */}
         <div>
-          {/* ⚡ UPDATED: High-contrast text label */}
-          <label className="block text-[11px] font-black text-slate-700 tracking-wider mb-1.5 uppercase">
+          <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
             GOOGLE MAPS LINK (LOCATION)
           </label>
           <input 
@@ -205,37 +197,36 @@ export default function PostJob({ recruiter, setView }) {
             value={locationLink} 
             onChange={(e) => setLocationLink(e.target.value)} 
             placeholder="Paste Google Maps Share Link (optional)..." 
-            className="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all placeholder-slate-400 font-bold" 
+            className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all placeholder-slate-400 font-medium" 
           />
         </div>
 
         {/* Travel Expenses Box */}
-        <div className="bg-slate-50 p-4 rounded-xl border border-slate-300 space-y-2.5">
-          {/* ⚡ UPDATED: High-contrast text label */}
-          <label className="block text-[11px] font-black text-slate-800 tracking-wider uppercase">
+        <div className="bg-slate-50/50 p-4 rounded-xl border border-slate-200/80 space-y-2.5">
+          <label className="block text-[11px] font-bold text-slate-900 tracking-wider uppercase">
             TRAVEL EXPENSES ( Bus Charge )? *
           </label>
           <div className="flex space-x-6">
-            <label className="flex items-center text-xs font-black text-slate-900 cursor-pointer select-none">
+            <label className="flex items-center text-xs font-medium text-slate-700 cursor-pointer select-none">
               <input 
                 type="radio" 
                 name="travelProvided" 
                 value="Yes" 
                 checked={travelProvided === 'Yes'} 
                 onChange={(e) => setTravelProvided(e.target.value)} 
-                className="h-4 w-4 text-slate-900 focus:ring-amber-400 accent-slate-900 border-slate-400 mr-2 cursor-pointer" 
+                className="h-4 w-4 text-slate-900 focus:ring-amber-400/40 accent-slate-900 border-slate-300 mr-2 cursor-pointer" 
                 required
               />
               🚗 Yes (Allowance Provided)
             </label>
-            <label className="flex items-center text-xs font-black text-slate-900 cursor-pointer select-none">
+            <label className="flex items-center text-xs font-medium text-slate-700 cursor-pointer select-none">
               <input 
                 type="radio" 
                 name="travelProvided" 
                 value="No" 
                 checked={travelProvided === 'No'} 
                 onChange={(e) => setTravelProvided(e.target.value)} 
-                className="h-4 w-4 text-slate-900 focus:ring-amber-400 accent-slate-900 border-slate-400 mr-2 cursor-pointer" 
+                className="h-4 w-4 text-slate-900 focus:ring-amber-400/40 accent-slate-900 border-slate-300 mr-2 cursor-pointer" 
                 required
               />
               ❌ No Travel Allowance
@@ -246,7 +237,7 @@ export default function PostJob({ recruiter, setView }) {
         {/* Action Button */}
         <button 
           type="submit" 
-          className="w-full bg-slate-900 hover:bg-amber-400 text-white hover:text-slate-900 font-black py-3.5 px-4 rounded-xl transition-all text-center text-xs tracking-wide shadow-md flex items-center justify-center gap-2 mt-2"
+          className="w-full bg-slate-900 hover:bg-amber-400 text-white hover:text-slate-900 font-bold py-3.5 px-4 rounded-xl transition-all text-center text-xs tracking-wide shadow-md flex items-center justify-center gap-2 mt-2"
         >
           Publish Job Card
         </button>
