@@ -48,12 +48,25 @@ export default function JobFeed({ recruiter }) {
   }, []);
 
   const formatTime12Hour = (timeString) => {
-    if (!timeString || !timeString.includes(':')) return timeString || 'Not specified';
-    const [hour, minute] = timeString.split(':');
-    const H = parseInt(hour, 10);
-    const ampm = H >= 12 ? 'PM' : 'AM';
-    const h = H % 12 || 12;
-    return `${h}:${minute} ${ampm}`;
+    if (!timeString) return 'Not specified';
+    
+    // ⚡ If the string already has AM or PM (from our new dropdown), use it directly!
+    if (timeString.includes('AM') || timeString.includes('PM')) {
+      return timeString;
+    }
+    
+    // Backward compatibility fallback for old 24-hour records in your MongoDB (e.g., "06:00")
+    if (timeString.includes(':')) {
+      const [hour, minute] = timeString.split(':');
+      const H = parseInt(hour, 10);
+      const ampm = H >= 12 ? 'PM' : 'AM';
+      const h = H % 12 || 12;
+      // Strip any trailing seconds/info if they exist
+      const cleanMinute = minute.split(' ')[0];
+      return `${h}:${cleanMinute} ${ampm}`;
+    }
+    
+    return timeString;
   };
 
   // ⚡ COMPUTE FILTERED RESULTS ON THE FLY:
@@ -179,7 +192,7 @@ export default function JobFeed({ recruiter }) {
                 <span>Date: <strong className="font-semibold text-slate-700">{job.dateOfWork}</strong></span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-slate-400 text-sm">⏰</span>
+                <span className="text-slate-400 text-sm">⏰</span>  
                 <span>Timing: <strong className="font-semibold text-slate-700">{formatTime12Hour(job.timing)}</strong></span>
               </div>
               

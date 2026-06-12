@@ -4,8 +4,8 @@ import axios from 'axios';
 export default function PostJob({ recruiter, setView }) {
   const [jobType, setJobType] = useState('🍽️ Food Serving / Catering');
   const [date, setDate] = useState('');
-  const [time, setTime] = useState(''); 
-  const [amount, setAmount] = useState('600');
+  const [time, setTime] = useState('06:00 AM');
+  const [amount, setAmount] = useState('500');
   const [paymentType, setPaymentType] = useState('Spot Cash'); 
   const [paymentTimeline, setPaymentTimeline] = useState('Same Day'); 
   const [address, setAddress] = useState('');
@@ -23,7 +23,7 @@ export default function PostJob({ recruiter, setView }) {
       whatsappOnly,
       jobType,
       dateOfWork: date,
-      timing: time, 
+      timing:time,
       amount: parseInt(amount),
       paymentType,   
       paymentTimeline: paymentType === 'Spot Cash' ? 'Immediate' : paymentTimeline, 
@@ -108,13 +108,30 @@ export default function PostJob({ recruiter, setView }) {
             <label className="block text-[11px] font-bold text-slate-900 tracking-wider mb-1.5 uppercase">
               REPORTING TIME *
             </label>
-            <input 
-              type="time" 
+            <select 
               value={time} 
               onChange={(e) => setTime(e.target.value)} 
-              className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none transition-all font-medium" 
+              className="w-full bg-slate-50 border border-slate-200 text-slate-800 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-medium" 
               required 
-            />
+            >
+              {/* Generates clean daytime working slots from 6:00 AM to 9:30 PM */}
+              {Array.from({ length: 32 }, (_, i) => {
+                const totalMinutes = 6 * 60 + i * 30; // Starts at 6:00 AM
+                const hours24 = Math.floor(totalMinutes / 60);
+                const minutes = totalMinutes % 60;
+                
+                const ampm = hours24 >= 12 ? 'PM' : 'AM';
+                const hours12 = hours24 % 12 || 12;
+                const formattedMinutes = minutes === 0 ? '00' : minutes;
+                
+                const timeString = `${hours12}:${formattedMinutes} ${ampm}`;
+                return (
+                  <option key={timeString} value={timeString} className="text-slate-900 font-medium">
+                    {timeString}
+                  </option>
+                );
+              })}
+            </select>
           </div>
         </div>
 
