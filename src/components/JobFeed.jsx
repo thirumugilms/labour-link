@@ -23,7 +23,7 @@ export default function JobFeed({ recruiter }) {
   const handleDeleteJob = async (jobId) => {
     if (window.confirm("Are you sure you want to remove this job listing?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/jobs/${jobId}`);
+        await axios.delete(`https://labour-link-hiq8.onrender.com/api/jobs/${jobId}`);
         alert("💼 Job listing removed successfully!");
         setJobs(jobs.filter(job => job._id !== jobId));
       } catch (error) {
@@ -36,7 +36,7 @@ export default function JobFeed({ recruiter }) {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/jobs');
+        const response = await axios.get('https://labour-link-hiq8.onrender.com/api/jobs');
         setJobs(response.data);
         setLoading(false);
       } catch (error) {

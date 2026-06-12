@@ -8,7 +8,7 @@ export default function MyGigs({ recruiter }) {
   // Fetch all jobs and filter by this recruiter's ID
   const fetchMyJobs = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/jobs');
+      const response = await axios.get('https://labour-link-hiq8.onrender.com/api/jobs');
       const filtered = response.data.filter(job => job.recruiterId === recruiter.id);
       setMyJobs(filtered);
       loading(false);
@@ -25,7 +25,7 @@ export default function MyGigs({ recruiter }) {
   const handleDeleteJob = async (jobId) => {
     if (window.confirm("Are you sure this job is filled? It will be permanently removed.")) {
       try {
-        await axios.delete(`http://localhost:5000/api/jobs/${jobId}`);
+        await axios.delete(`https://labour-link-hiq8.onrender.com/api/jobs/${jobId}`);
         alert("💼 Listing removed successfully!");
         // Update local state instantly
         setMyJobs(myJobs.filter(job => job._id !== jobId));

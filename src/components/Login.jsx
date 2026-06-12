@@ -8,7 +8,7 @@ export default function Login({ setRecruiter, setView }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { phone, password });
+      const response = await axios.post('https://labour-link-hiq8.onrender.com/api/auth/login', { phone, password });
       alert(`Welcome back, ${response.data.name}!`);
       
       // ⚡ This safely routes directly into handleLoginSuccess inside App.jsx now!

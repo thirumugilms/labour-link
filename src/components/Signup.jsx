@@ -9,7 +9,7 @@ export default function Signup({ setView }) {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signup', { name, phone, password });
+      const response = await axios.post('https://labour-link-hiq8.onrender.com/api/auth/signup', { name, phone, password });
       alert(response.data.message);
       setView('login'); // Redirect to login page on success
     } catch (error) {

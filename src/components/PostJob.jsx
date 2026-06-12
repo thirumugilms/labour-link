@@ -33,7 +33,7 @@ export default function PostJob({ recruiter, setView }) {
     };
 
     try {
-      await axios.post('http://localhost:5000/api/jobs', newJob);
+      await axios.post('https://labour-link-hiq8.onrender.com/api/jobs', newJob);
       alert('🎉 SUCCESS! Job Card saved permanently to MongoDB!');
       setView('feed');
     } catch (error) {
