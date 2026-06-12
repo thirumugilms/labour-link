@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   🌐 BACKGROUND TRANSLATION ENGINE SILENCER FILTERS
+   ========================================================================== */
+
+/* Remove any default headers or frame windows injected by the widget tool */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe[class*="goog-te-banner-frame"],
+#goog-gt-tt {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0px !important;
+}
+
+iframe.goog-te-menu-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
