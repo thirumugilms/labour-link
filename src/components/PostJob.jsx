@@ -129,9 +129,11 @@ export default function PostJob({ recruiter, setView }) {
             className="w-full bg-slate-50 border border-slate-200 text-emerald-700 rounded-xl p-3 text-sm focus:ring-2 focus:ring-amber-400/30 focus:border-amber-400 focus:outline-none cursor-pointer transition-all font-semibold text-base" 
             required
           >
-            <option value="600" className="text-slate-900 font-medium">₹600</option>
-            <option value="1000" className="text-slate-900 font-medium">₹1000</option>
-            <option value="1500" className="text-slate-900 font-medium">₹1500</option>
+            {Array.from({ length: 10 }, (_, i) => (i + 1) * 100).map((val) => (
+              <option key={val} value={val} className="text-slate-900 font-medium">
+                ₹{val}
+              </option>
+            ))}
           </select>
         </div>
 
