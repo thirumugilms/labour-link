@@ -17,11 +17,11 @@ const jobSchema = new mongoose.Schema({
   travelProvided: { type: String, required: true, default: "No" }, // 👈 NEW: Radio selection field
   expiresAt: { 
     type: Date, 
-    required: false 
+    required: false,
+    index: { expiresAfterSeconds: 0 } // 🔥 Tells MongoDB to delete the document immediately when this time hits!
   }
-}, 
-{ 
-  timestamps: true ,
+}, { 
+  timestamps: true 
 });
 
 export default mongoose.model('Job', jobSchema);
