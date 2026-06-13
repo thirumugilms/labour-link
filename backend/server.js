@@ -8,7 +8,6 @@ import Job from './models/Job.js';
 
 const app = express();
 
-// 读取隐藏的环境变量，如果没配置则默认使用 5000 端口
 const PORT = process.env.PORT || 5000;
 
 // Middlewares
@@ -17,6 +16,24 @@ app.use(express.json());
 
 // Connect Database
 connectDB();
+
+// ==========================================
+// 🧹 BACKGROUND DATABASE AUTO-CLEANER LOOP
+// ==========================================
+// Wakes up automatically every 15 minutes to clear out-of-date jobs from MongoDB.
+setInterval(async () => {
+  try {
+    const now = new Date();
+    // Deletes documents where the computed expiration timestamp has passed
+    const result = await Job.deleteMany({ expiresAt: { $lte: now } });
+    if (result.deletedCount > 0) {
+      console.log(`🧹 Auto-Clean Database: Purged ${result.deletedCount} expired job listings.`);
+    }
+  } catch (error) {
+    console.error("❌ Auto-Clean Loop Error:", error.message);
+  }
+}, 15 * 60 * 1000); // 15 minutes in milliseconds
+
 
 // ==========================================
 // AUTHENTICATION API ROUTES
@@ -68,7 +85,32 @@ app.post('/api/auth/login', async (req, res) => {
 // Post Job
 app.post('/api/jobs', async (req, res) => {
   try {
-    const newJob = new Job(req.body);
+    const { dateOfWork, timing } = req.body;
+    
+    // 🕒 COMPUTE EXPIRE TIMESTAMP (e.g., merging "2026-06-15" & "06:30 PM")
+    let expiresAt = null;
+    if (dateOfWork && timing) {
+      // Extract numeric components
+      const [timePart, modifier] = timing.split(' ');
+      let [hours, minutes] = timePart.split(':').map(Number);
+      
+      // Convert 12-hour format to 24-hour integers dynamically
+      if (modifier === 'PM' && hours < 12) hours += 12;
+      if (modifier === 'AM' && hours === 12) hours = 0;
+      
+      // Construct a unified ISO Date instance
+      const expirationDate = new Date(dateOfWork);
+      expirationDate.setHours(hours, minutes, 0, 0);
+      expiresAt = expirationDate;
+    }
+
+    // Attach the expiration timestamp into the payload object
+    const jobData = {
+      ...req.body,
+      expiresAt: expiresAt
+    };
+
+    const newJob = new Job(jobData);
     const savedJob = await newJob.save();
     res.status(201).json(savedJob);
   } catch (error) {
@@ -79,6 +121,11 @@ app.post('/api/jobs', async (req, res) => {
 // Get All Jobs
 app.get('/api/jobs', async (req, res) => {
   try {
+    // ⚡ ON-THE-FLY CLEANUP TRAP: 
+    // Cleans out expired items right before fetching to cover Render Free Tier spin-up gaps
+    const now = new Date();
+    await Job.deleteMany({ expiresAt: { $lte: now } });
+
     const allJobs = await Job.find().sort({ createdAt: -1 });
     res.json(allJobs);
   } catch (error) {

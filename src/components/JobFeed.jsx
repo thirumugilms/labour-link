@@ -71,10 +71,21 @@ export default function JobFeed({ recruiter }) {
 
   // ⚡ COMPUTE FILTERED RESULTS ON THE FLY:
   const filteredJobs = jobs.filter((job) => {
-    const matchesCategory = selectedCategory === 'All' || job.jobType === selectedCategory;
-    const matchesLocation = job.address?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
-    return matchesCategory && matchesLocation;
-  });
+  const matchesCategory = selectedCategory === 'All' || job.jobType === selectedCategory;
+  const matchesLocation = job.address?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
+  
+  // 🕒 Live Expiration Check: If the job has an expiration stamp, check it against the exact current time
+  let isNotExpired = true;
+  if (job.expiresAt) {
+    isNotExpired = new Date(job.expiresAt) > new Date();
+  } else {
+    // Fallback for old database entries that only have a date string
+    const todayStr = new Date().toISOString().split('T')[0];
+    isNotExpired = job.dateOfWork >= todayStr;
+  }
+
+  return matchesCategory && matchesLocation && isNotExpired;
+});
 
   return (
     <div className="space-y-5">
