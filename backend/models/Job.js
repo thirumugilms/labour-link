@@ -15,8 +15,13 @@ const jobSchema = new mongoose.Schema({
   locationLink: { type: String, default: "" },
   
   travelProvided: { type: String, required: true, default: "No" }, // 👈 NEW: Radio selection field
-  
-  createdAt: { type: Date, default: Date.now }
+  expiresAt: { 
+    type: Date, 
+    required: false 
+  }
+}, 
+{ 
+  timestamps: true ,
 });
 
 export default mongoose.model('Job', jobSchema);
