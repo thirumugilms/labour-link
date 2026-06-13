@@ -74,14 +74,31 @@ export default function JobFeed({ recruiter }) {
   const matchesCategory = selectedCategory === 'All' || job.jobType === selectedCategory;
   const matchesLocation = job.address?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
   
-  // 🕒 Live Expiration Check: If the job has an expiration stamp, check it against the exact current time
+  // 🕒 Pure Local Device Time Check (Fixes UTC/IST Timezone Offsets)
   let isNotExpired = true;
-  if (job.expiresAt) {
-    isNotExpired = new Date(job.expiresAt) > new Date();
-  } else {
-    // Fallback for old database entries that only have a date string
-    const todayStr = new Date().toISOString().split('T')[0];
-    isNotExpired = job.dateOfWork >= todayStr;
+  
+  if (job.dateOfWork && job.timing) {
+    try {
+      // 1. Clean up strings (e.g., dateOfWork: "2026-06-13", timing: "01:00 PM")
+      const [timePart, modifier] = job.timing.split(' ');
+      let [hours, minutes] = timePart.split(':').map(Number);
+      
+      // Convert standard 12-hour elements to 24-hour match parameters
+      if (modifier === 'PM' && hours < 12) hours += 12;
+      if (modifier === 'AM' && hours === 12) hours = 0;
+      
+      // 2. Build a native local target date string instance
+      const jobTargetTime = new Date(job.dateOfWork);
+      jobTargetTime.setHours(hours, minutes, 0, 0);
+      
+      const tenMinutesBuffer = 10 * 60 * 1000; // 10-minute grace period
+      
+      // 3. Compare directly using pure local epoch milliseconds
+      isNotExpired = (jobTargetTime.getTime() + tenMinutesBuffer) > new Date().getTime();
+    } catch (err) {
+      console.error("Time filtering calculation error:", err);
+      isNotExpired = true; // Fallback safety default
+    }
   }
 
   return matchesCategory && matchesLocation && isNotExpired;
