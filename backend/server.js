@@ -17,23 +17,6 @@ app.use(express.json());
 // Connect Database
 connectDB();
 
-// ==========================================
-// 🧹 BACKGROUND DATABASE AUTO-CLEANER LOOP
-// ==========================================
-// Runs silently in the background every 15 minutes to clear out-of-date jobs from MongoDB.
-setInterval(async () => {
-  try {
-    const now = new Date();
-    // Deletes documents where the computed expiration timestamp has passed
-    const result = await Job.deleteMany({ expiresAt: { $lte: now } });
-    if (result.deletedCount > 0) {
-      console.log(`🧹 Auto-Clean Loop: Purged ${result.deletedCount} expired job listings from MongoDB.`);
-    }
-  } catch (error) {
-    console.error("❌ Auto-Clean Loop Error:", error.message);
-  }
-}, 15 * 60 * 1000); // 15 minutes in milliseconds
-
 
 // ==========================================
 // AUTHENTICATION API ROUTES
